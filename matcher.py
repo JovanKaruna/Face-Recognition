@@ -6,6 +6,7 @@ import pickle
 import os
 import matplotlib.pyplot as plt
 from extractor import extract_features
+import vectorutils
 
 
 class Matcher(object):
@@ -23,7 +24,12 @@ class Matcher(object):
     def cos_cdist(self, vector):
         # getting cosine distance between search image and images database
         v = vector.reshape(1, -1)
-        return spatial.distance.cdist(self.matrix, v, 'cosine').reshape(-1)
+        return vectorutils.cosine_similarity(self.matrix,v)
+    
+    def euclidean_dist(self, vector):
+        # To get euclidean distance between search image and images database
+        v = vector.reshape(1,-1)
+        return vectorutils.euclidian_distance(self.matrix,v)
 
     def match(self, image_path, topn=5):
         features = extract_features(image_path)
@@ -63,3 +69,4 @@ def run():
 
 if __name__ == '__main__':
     run()
+
