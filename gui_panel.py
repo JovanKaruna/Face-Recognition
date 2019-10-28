@@ -9,12 +9,17 @@ title = "Face Recognition Algeo"
 photos_shown = 20
 photos_per_row = 2
 total_rows = (photos_shown - 1) // photos_per_row + 1
+app = wx.App()
+screenSize = wx.DisplaySize()
+screenWidth = screenSize[0]
+screenHeight = screenSize[1]
 
 # constants
-PhotoMaxSize = 280
+PhotoMaxSize = screenHeight//5
+app.ExitMainLoop()
 offset = 8
 width = PhotoMaxSize * photos_per_row + offset * (photos_per_row + 1)
-height = width * 1.5
+height = width * 2
 imgpath = ""
 name = 'alexandra daddario'
 appSize = wx.Size(width, height)
