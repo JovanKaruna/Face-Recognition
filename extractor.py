@@ -51,11 +51,11 @@ def batch_extractor(images_path, pickled_db_path="features.pck"):
         pickle.dump(result, fp)
 
 
-def run(resources_path=r'resources/'):
+def run(resources_path=r'resources/base'):
     for person in os.listdir(resources_path):
         images_path = resources_path + person
         batch_extractor(images_path, r"result/" + person)
 
 
 if __name__ == '__main__':
-    run(r'resources/')
+    run(r'resources/base')

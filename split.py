@@ -1,7 +1,8 @@
 import os
 import shutil
 
-root = "PINS"
+# Initialize root values
+root = "resources"
 foldernames = []
 
 # Finding all folder
@@ -28,7 +29,7 @@ os.makedirs(root + '/' + 'test')
 base_dir = os.path.join(root, 'base')
 test_dir = os.path.join(root, 'test')
 
-# Splitting data
+# Splitting data with the percentage of 80% and 20%
 j = 0
 for filelist in file_per_folder:
     val_count = 0
