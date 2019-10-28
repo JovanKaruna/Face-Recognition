@@ -1,10 +1,8 @@
 import numpy.core.multiarray
 import numpy as np
 from scipy import spatial
-from imageio import imread
 import pickle
 import os
-import matplotlib.pyplot as plt
 from extractor import extract_features
 import vectorutils
 
@@ -22,18 +20,24 @@ class Matcher(object):
         self.names = np.array(self.names)
 
     def cos_cdist(self, vector):
-        # getting cosine distance between search image and images database
         v = vector.reshape(1, -1)
-        return vectorutils.cosine_similarity(self.matrix,v)
-    
-    def euclidean_dist(self, vector):
-        # To get euclidean distance between search image and images database
-        v = vector.reshape(1,-1)
-        return vectorutils.euclidian_distance(self.matrix,v)
+        # return spatial.distance.cdist(self.matrix, v, 'cosine').reshape(-1)
+        ans = []
+        for img_vector in self.matrix:
+            ans.append(1 - vectorutils.cosine_similarity(img_vector.reshape(-1), v.reshape(-1)))
+        return np.array(ans)
 
-    def match(self, image_path, topn=5):
+    def euclidean_dist(self, vector):
+        v = vector.reshape(1, -1)
+        ans = []
+        for img_vector in self.matrix:
+            ans.append(vectorutils.euclidian_distance(img_vector.reshape(-1), v.reshape(-1)))
+        return np.array(ans)
+
+    def match(self, image_path, topn=6):
         features = extract_features(image_path)
-        img_distances = self.cos_cdist(features)
+        # img_distances = self.cos_cdist(features)
+        img_distances = self.euclidean_dist(features)
         # getting top 5 records
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
         nearest_img_paths = self.names[nearest_ids].tolist()
@@ -41,32 +45,10 @@ class Matcher(object):
         return nearest_img_paths, img_distances[nearest_ids].tolist()
 
 
-def show_img(path):
-    print(path)
-    img = imread(path, pilmode="RGB")
-    plt.imshow(img)
-    plt.show()
-
-
-def get_match_img_path(img, source='features.pck', sample_size=0.2):
+def get_match_img_path(img, source='features.pck', sample_size=0.2, topn=6):
     ma = Matcher(source)
-    T = 5
-    print(os.path.dirname(img))
-    names, match = ma.match(img, topn=T)
-    print(os.getcwd())
-    for i in range(T):
-        print('Match %s' % (1 - match[i]))
-        print(img, names[i])
-        yield (os.path.join(os.getcwd(), img.split('\\')[-3], img.split('\\')[-2], names[i]))
-
-
-def run():
-    name = 'alexandra daddario'
-    folder = 'resources/pins_' + name + '/'
-    for img in get_match_img_path(os.path.join(os.getcwd(), folder, os.listdir(folder)[3]), os.path.join(os.getcwd(), 'result/pins_' + name)):
-        show_img(img)
-
-
-if __name__ == '__main__':
-    run()
-
+    names, match = ma.match(img, topn=topn)
+    ans = []
+    for i in range(topn):
+        ans.append(os.path.join(os.getcwd(), img.split('\\')[-3], img.split('\\')[-2], names[i]))
+    return ans
