@@ -154,8 +154,6 @@ class panel_two (wx.lib.scrolledpanel.ScrolledPanel):
     def on_get_other_photo(self, event):
         self.Hide()
         self.parent.drag_and_drop_panel.Show()
-        global imgpath
-        imgpath = ""
 
     def load_img(self, matches):
         for i in range(photos_shown):

@@ -21,12 +21,17 @@ class Matcher(object):
 
     def cos_cdist(self, vector):
         v = vector.reshape(1, -1)
-        return spatial.distance.cdist(self.matrix, v, 'cosine').reshape(-1)
-        return vectorutils.cosine_similarity(self.matrix, v)
+        ans = []
+        for img_vector in self.matrix:
+            ans.append(1 - vectorutils.cosine_similarity(img_vector.reshape(-1), v.reshape(-1)))
+        return np.array(ans)
 
     def euclidean_dist(self, vector):
         v = vector.reshape(1, -1)
-        return vectorutils.euclidian_distance(self.matrix, v)
+        ans = []
+        for img_vector in self.matrix:
+            ans.append(vectorutils.euclidian_distance(img_vector.reshape(-1), v.reshape(-1)))
+        return np.array(ans)
 
     def match(self, image_path, topn=6, method='cosine'):
         features = extract_features(image_path)
@@ -34,8 +39,6 @@ class Matcher(object):
             img_distances = self.cos_cdist(features)
         else:
             img_distances = self.euclidean_dist(features)
-
-        # getting top topn records
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
         nearest_img_paths = self.names[nearest_ids].tolist()
 
