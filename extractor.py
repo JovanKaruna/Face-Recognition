@@ -6,8 +6,6 @@ import pickle
 import os
 from tqdm import tqdm
 
-# Feature extractor
-
 
 def extract_features(image_path, vector_size=32):
     image = imread(image_path, pilmode="RGB")
@@ -44,12 +42,9 @@ result = {}
 
 def batch_extractor(images_path):
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
-    for f in files:
-        print('Extracting features from image %s' % f)
+    for f in tqdm(files):
         name = f.split('\\')[-1].lower()
-        print(name)
         result[name] = extract_features(f)
-    print(images_path, " done")
 
 
 def batch_dump(path):
@@ -58,11 +53,9 @@ def batch_dump(path):
 
 
 def run(resources_path=r'resources/base/'):
-    for person in tqdm(os.listdir(resources_path)):
-        images_path = resources_path + person
-        batch_extractor(images_path)
+    batch_extractor(resources_path)
     batch_dump("features.pck")
 
 
 if __name__ == '__main__':
-    run(r'tes/')
+    run(r'resources/base/')

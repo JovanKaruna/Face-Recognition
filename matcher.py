@@ -49,5 +49,5 @@ def get_match_img_path(img, source='features.pck', sample_size=0.2, topn=6, meth
     names, match = ma.match(img, topn=topn, method=method)
     ans = []
     for i in range(topn):
-        ans.append(os.path.join(os.getcwd(), img.split('\\')[-3], img.split('\\')[-2], names[i]))
+        ans.append(os.path.join(os.getcwd(), "resources\\base\\", names[i]))
     return ans
