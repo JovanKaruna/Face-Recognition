@@ -1,7 +1,6 @@
 import wx
 import wx.lib.scrolledpanel
 from pubsub import pub
-import os
 import matcher
 
 # Global Variables
@@ -15,13 +14,13 @@ screenWidth = screenSize[0]
 screenHeight = screenSize[1]
 
 # constants
-PhotoMaxSize = screenHeight//5
+PhotoMaxSize = screenHeight // 5
 app.ExitMainLoop()
 offset = 8
 width = PhotoMaxSize * photos_per_row + offset * (photos_per_row + 1)
 height = width * 2
 imgpath = ""
-name = 'alexandra daddario'
+image_database = "features.pck"
 appSize = wx.Size(width, height)
 
 
@@ -112,7 +111,7 @@ class panel_one (wx.Panel):
         self.Hide()
 
         # get matching images, then load it to second panel
-        self.matches = matcher.get_match_img_path(imgpath, os.path.join(os.getcwd(), 'result/pins_' + name), topn=photos_shown, method=method)
+        self.matches = matcher.get_match_img_path(imgpath, image_database, topn=photos_shown, method=method)
         self.parent.show_img_panel.load_img(self.matches)
         self.parent.show_img_panel.Show()
         self.Layout()

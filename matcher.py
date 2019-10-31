@@ -1,6 +1,5 @@
 import numpy.core.multiarray
 import numpy as np
-from scipy import spatial
 import pickle
 import os
 from extractor import extract_features
