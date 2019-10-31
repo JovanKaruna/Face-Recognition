@@ -4,7 +4,7 @@ import numpy as np
 from imageio import imread
 import pickle
 import os
-
+from tqdm import tqdm
 
 # Feature extractor
 def extract_features(image_path, vector_size=32):
@@ -39,7 +39,6 @@ def extract_features(image_path, vector_size=32):
 
 def batch_extractor(images_path, pickled_db_path="features.pck"):
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
-
     result = {}
     for f in files:
         print('Extracting features from image %s' % f)
@@ -51,11 +50,11 @@ def batch_extractor(images_path, pickled_db_path="features.pck"):
         pickle.dump(result, fp)
 
 
-def run(resources_path=r'resources/base'):
-    for person in os.listdir(resources_path):
+def run(resources_path=r'resources/base/'):
+    for person in tqdm(os.listdir(resources_path)):
         images_path = resources_path + person
         batch_extractor(images_path, r"result/" + person)
 
 
 if __name__ == '__main__':
-    run(r'resources/base')
+    run(r'resources/base/')

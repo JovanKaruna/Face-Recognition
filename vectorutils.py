@@ -35,8 +35,4 @@ def cosine_similarity(v1, v2):
   return (v1v2 / (norm_v1_2 * norm_v2_2))
 
 
-# # contoh
-# a = np.array([0, 0, 0, 0.1])
-# b = np.array([0, 0, 0, 0.1])
-# print(cosine_similarity(a, b))
-# print(euclidian_distance(a, b))
+
