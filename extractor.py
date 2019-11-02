@@ -12,7 +12,7 @@ def extract_features(image_path, vector_size=32):
     try:
         # Using KAZE, cause SIFT, ORB and other was moved to additional module
         # which is adding addtional pain during install
-        alg = cv2.KAZE_create()
+        alg = cv2.xfeatures2d.SIFT_create()
         # Dinding image keypoints
         kps = alg.detect(image)
         # Getting first 32 of them.
