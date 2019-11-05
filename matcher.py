@@ -41,7 +41,6 @@ class Matcher(object):
             ans.append(vectorutils.euclidian_distance(img_vector.reshape(-1), v.reshape(-1)))
         return np.array(ans)
 
-
     def match(self, image_path, topn=20, method='cosine'):
         """
             Fungsi implementasi pendeteksi wajah dengan memakai 2 metriks, yaitu
