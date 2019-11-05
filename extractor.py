@@ -16,18 +16,18 @@ def extract_features(image_path, vector_size=32):
     image = imread(image_path, pilmode="RGB")
     try:
         kaze = cv2.KAZE_create()
-        kps = kaze.detect(image)
-        kps = sorted(kps, key=lambda x: -x.response)[:vector_size]
-        kps, dsc = kaze.compute(image, kps)
-        dsc = dsc.flatten()
+        fiture = kaze.detect(image)
+        fiture = sorted(fiture, key=lambda x: -x.response)[:vector_size]
+        fiture, vector = kaze.compute(image, fiture)
+        vector = vector.flatten()
         needed_size = (vector_size * 64)
-        if dsc.size < needed_size:
-            dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
+        if vector.size < needed_size:
+            vector = np.concatenate([vector, np.zeros(needed_size - vector.size)])
     except cv2.error as e:
         print('Error: ', e)
         return None
 
-    return dsc
+    return vector
 
 
 result = {}

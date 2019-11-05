@@ -21,7 +21,7 @@ class Matcher(object):
         self.matrix = np.array(self.matrix)
         self.names = np.array(self.names)
 
-    def cos_dist(self, vector):
+    def cosine_distance(self, vector):
         """
             Fungsi pendeteksi wajah dengan metriks jarak cosine
         """
@@ -31,7 +31,7 @@ class Matcher(object):
             ans.append(1 - vectorutils.cosine_similarity(img_vector.reshape(-1), v.reshape(-1)))
         return np.array(ans)
 
-    def euclidean_dist(self, vector):
+    def euclidean_distance(self, vector):
         """
             Fungsi pendeteksi wajah dengan metriks jarak euclidian
         """
@@ -50,9 +50,9 @@ class Matcher(object):
         """
         features = extract_features(image_path)
         if(method == 'cosine'):
-            img_distances = self.cos_dist(features)
+            img_distances = self.cosine_distance(features)
         else:
-            img_distances = self.euclidean_dist(features)
+            img_distances = self.euclidean_distance(features)
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
         nearest_img_paths = self.names[nearest_ids].tolist()
 

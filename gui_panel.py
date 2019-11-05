@@ -42,7 +42,7 @@ class MainFrame(wx.Frame):
         pub.subscribe(self.update_image_on_dnd, 'dnd')
         # Add a panel so it looks the correct on all platforms
         self.panel = wx.Panel(self, wx.ID_ANY)
- 
+        #Icon on the frame
         ico = wx.Icon('icon.ico', wx.BITMAP_TYPE_ICO)
         self.SetIcon(ico)
     
@@ -75,7 +75,7 @@ class panel_one (wx.Panel):
         wx.Panel.__init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=appSize, style=wx.TAB_TRAVERSAL)
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         
-        #Face
+        #Facerecognition title
         faceLbl = wx.StaticText(self,-1, "FACE RECOGNITION", (100, 50), (300, -1), wx.ALIGN_CENTER)
         faceLbl.SetForegroundColour(wx.WHITE) # set text color
         font = wx.Font(17, wx.DECORATIVE, wx.NORMAL, wx.BOLD)
