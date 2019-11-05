@@ -2,6 +2,10 @@ import os
 import shutil
 from tqdm import tqdm
 
+"""
+Program untuk melakukan ekstraksi seluruh data dari tiap folder menjadi 1 database.
+"""
+
 root = os.path.join("resources", "base")
 foldernames = []
 

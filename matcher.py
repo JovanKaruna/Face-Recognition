@@ -8,6 +8,9 @@ import vectorutils
 
 class Matcher(object):
     def __init__(self, pickled_db_path="features.pck"):
+        """
+            Proses inisialisasi objek matcher citra
+        """
         with open(pickled_db_path, 'rb') as fp:
             self.data = pickle.load(fp)
         self.names = []
@@ -19,6 +22,9 @@ class Matcher(object):
         self.names = np.array(self.names)
 
     def cos_dist(self, vector):
+        """
+            Fungsi pendeteksi wajah dengan metriks jarak cosine
+        """
         v = vector.reshape(1, -1)
         ans = []
         for img_vector in self.matrix:
@@ -26,6 +32,9 @@ class Matcher(object):
         return np.array(ans)
 
     def euclidean_dist(self, vector):
+        """
+            Fungsi pendeteksi wajah dengan metriks jarak euclidian
+        """
         v = vector.reshape(1, -1)
         ans = []
         for img_vector in self.matrix:
@@ -34,6 +43,11 @@ class Matcher(object):
 
 
     def match(self, image_path, topn=20, method='cosine'):
+        """
+            Fungsi implementasi pendeteksi wajah dengan memakai 2 metriks, yaitu
+                1.  Metrik cosine  (default)
+                2.  Metrik euclidian
+        """
         features = extract_features(image_path)
         if(method == 'cosine'):
             img_distances = self.cos_dist(features)
@@ -46,6 +60,12 @@ class Matcher(object):
 
 
 def get_match_img_path(img, source='features.pck', sample_size=0.2, topn=6, method='cosine'):
+    """
+        Fungsi untuk mengambil citra - citra dengan fitur paling sama dengan citra yang dimasukkan.
+        Notes : Kumpulan fitur citra disimpan di sebuah file yang berdefault => features.pck
+                Method yang digunakan ada 2 : 1. cosine
+                                              2. euclidian
+    """
     ma = Matcher(source)
     names, match = ma.match(img, topn=topn, method=method)
     ans = []
