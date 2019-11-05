@@ -6,7 +6,7 @@ by :
 - Jonathan Yudi Gunawan - 13518084 - K3
 - William               - 13518138 - K3 
 
-![Image of Us](https://github.com/JovanKaruna/Algeo2-Face/blob/master/FotoCover.jpg)
+![Image of Us](https://github.com/JovanKaruna/Algeo2-Face/blob/master/src/FotoCover.jpg)
 ## Requirements:
 - python 3
 - wxpython (GUI Library for Python)
