@@ -32,19 +32,11 @@ class Matcher(object):
             ans.append(vectorutils.euclidian_distance(img_vector.reshape(-1), v.reshape(-1)))
         return np.array(ans)
 
-    def combine_dist(self,vector):
-        v = vector.reshape(1, -1)
-        ans = []
-        for img_vector in self.matrix:
-            ans.append(vectorutils.combine_metrics(img_vector.reshape(-1), v.reshape(-1)))
-        return np.array(ans)
 
-    def match(self, image_path, topn=6, method='cosine'):
+    def match(self, image_path, topn=20, method='cosine'):
         features = extract_features(image_path)
         if(method == 'cosine'):
             img_distances = self.cos_cdist(features)
-        else if 'combine':
-            img_distances = self.combine_dist(features)
         else:
             img_distances = self.euclidean_dist(features)
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
