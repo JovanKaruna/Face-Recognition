@@ -12,15 +12,15 @@ def extract_features(image_path, vector_size=32):
     try:
         # Using KAZE, cause SIFT, ORB and other was moved to additional module
         # which is adding addtional pain during install
-        alg = cv2.KAZE_create()
+        kaze = cv2.KAZE_create()
         # Dinding image keypoints
-        kps = alg.detect(image)
+        kps = kaze.detect(image)
         # Getting first 32 of them.
         # Number of keypoints is varies depend on image size and color pallet
         # Sorting them based on keypoint response value(bigger is better)
         kps = sorted(kps, key=lambda x: -x.response)[:vector_size]
         # computing descriptors vector
-        kps, dsc = alg.compute(image, kps)
+        kps, dsc = kaze.compute(image, kps)
         # Flatten all of them in one big vector - our feature vector
         dsc = dsc.flatten()
         # Making descriptor of same size

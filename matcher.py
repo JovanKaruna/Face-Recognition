@@ -18,7 +18,7 @@ class Matcher(object):
         self.matrix = np.array(self.matrix)
         self.names = np.array(self.names)
 
-    def cos_cdist(self, vector):
+    def cos_dist(self, vector):
         v = vector.reshape(1, -1)
         ans = []
         for img_vector in self.matrix:
@@ -36,7 +36,7 @@ class Matcher(object):
     def match(self, image_path, topn=20, method='cosine'):
         features = extract_features(image_path)
         if(method == 'cosine'):
-            img_distances = self.cos_cdist(features)
+            img_distances = self.cos_dist(features)
         else:
             img_distances = self.euclidean_dist(features)
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
